@@ -38,7 +38,7 @@ jobs:
         unzip chest-xray-pneumonia.zip -d data/
 
     - name: Train the model
-      run: python covid_x_ray_cnn_project_(1).py
+      run: python covid_x_ray_cnn_project.py
 
     - name: Upload model artifacts
       uses: actions/upload-artifact@v4
