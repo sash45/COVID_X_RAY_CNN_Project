@@ -1,0 +1,32 @@
+name: CI/CD for COVID X-ray CNN Project
+
+on: push  # Trigger on every push to main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Linting
+        run: flake8 . --ignore=E501
+
+      - name: Run Unit Tests
+        run: pytest tests/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Trigger Model Training in Colab
+        run: |
+          python colab_trigger.py
